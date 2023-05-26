@@ -1,15 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 5000;
+app.use(cors());
+const PORT = process.env.PORT || 8000;
 let flgCmdStatus = false;
-let i =0;
 let value;
-app.get(`/app/setValue/:id`,(req,res)=>{
+app.get(`/app/setValue`,cors(),(req,res)=>{
     let cmdStatus = "";
     if(flgCmdStatus == false)
     {
-        const{ id } = req.params;
-        i = id;
         value = req.query.value;
         cmdStatus ="success"; 
         flgCmdStatus = true;
@@ -21,12 +20,11 @@ app.get(`/app/setValue/:id`,(req,res)=>{
     
     const data = {
         status:cmdStatus,
-        user:i,
         value:value,
     }
-    res.json(data);
+    res.send(cmdStatus);
 });
-app.get(`/game/getValue/`,(req,res)=>{
+app.get(`/game/getValue`,cors(),(req,res)=>{
     let cmdStatus = "";
     
     if(flgCmdStatus == false)
@@ -35,16 +33,11 @@ app.get(`/game/getValue/`,(req,res)=>{
     }
     else
     {
-        cmdStatus = "CMD"
+        cmdStatus = value;
         flgCmdStatus = false;
 
     }
-    const data = {
-        id:i,
-        value:value,
-        status:cmdStatus,
-    }
-    res.json(data);
+    res.send(cmdStatus);
 });
 app.listen(PORT,()=>{
     console.log(`Server Listening on port ${PORT}`);
