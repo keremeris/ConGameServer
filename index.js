@@ -43,7 +43,7 @@ app.get(`/ChooseGravity/setValue`,cors(),(req,res)=>{
    
     res.send(cmdStatus);
 });
-app.get(`/ChooseGravity/setValue`,cors(),(req,res)=>{
+app.get(`/Stickyman/setValue`,cors(),(req,res)=>{
     let cmdStatus = "";
     //console.log("received SetValue from React");
     if(flgCmdStatus_Stickyman == false)
